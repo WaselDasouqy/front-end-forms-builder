@@ -1,0 +1,69 @@
+name: Deploy Frontend to Vercel
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'formwave-frontend/**'
+      - '.github/workflows/deploy.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'formwave-frontend/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: formwave-frontend/package-lock.json
+        
+    - name: Install dependencies
+      run: |
+        cd formwave-frontend
+        npm ci
+        
+    - name: Run type check
+      run: |
+        cd formwave-frontend
+        npm run type-check
+        
+    - name: Run linting
+      run: |
+        cd formwave-frontend
+        npm run lint
+        
+    - name: Run tests
+      run: |
+        cd formwave-frontend
+        npm test
+      env:
+        CI: true
+        
+    - name: Build application
+      run: |
+        cd formwave-frontend
+        npm run build
+      env:
+        NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+        NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Deploy to Vercel
+      run: |
+        echo "Deployment will be triggered automatically by Vercel when code is pushed to main branch"
+        echo "Make sure your Vercel project is connected to this GitHub repository" 
