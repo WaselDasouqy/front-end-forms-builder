@@ -1,6 +1,6 @@
 # FormWave Frontend
 
-A modern, responsive form builder application built with Next.js 15, React 19, TypeScript, and Tailwind CSS.
+A modern, responsive form builder application built with Next.js 15, React 18, TypeScript, and Tailwind CSS.
 
 ## 🚀 Features
 
@@ -12,7 +12,7 @@ A modern, responsive form builder application built with Next.js 15, React 19, T
 - **User Authentication** - Secure user accounts with Supabase Auth
 - **Form Sharing** - Share forms with custom URLs
 - **Export Options** - Export form data in various formats
-- **Performance Optimized** - Built with Next.js 15 and React 19
+- **Performance Optimized** - Built with Next.js 15 and React 18
 
 ## 📋 Prerequisites
 
@@ -202,7 +202,7 @@ For other platforms:
 ## 🎯 Performance Optimizations
 
 - **Next.js 15** with App Router for optimal performance
-- **React 19** with concurrent features
+- **React 18** with concurrent features
 - **Turbopack** for faster development builds
 - **Image optimization** with Next.js Image component
 - **Bundle splitting** for smaller initial loads
